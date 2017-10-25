@@ -1,22 +1,10 @@
 var gulp = require('gulp');
-var less = require('gulp-less');
 var path = require('path');
 var mocha = require('gulp-mocha');
 var browserSync = require('browser-sync');
 var nodemon = require('gulp-nodemon');
 var cp = require('child_process');
 var tsb = require('gulp-tsb');
-
-
-// compile less files from the ./styles folder
-// into css files to the ./public/stylesheets folder
-gulp.task('less', function () {
-    return gulp.src('./src/styles/**/*.less')
-        .pipe(less({
-            paths: [path.join(__dirname, 'less', 'includes')]
-        }))
-        .pipe(gulp.dest('./out/public/stylesheets'));
-});
 
 
 // run mocha tests in the ./tests folder
@@ -68,8 +56,7 @@ gulp.task('build', function () {
 // if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
     gulp.watch('src/**/*.ts', ['build']);
-    gulp.watch('src/styles/**/*.less', ['less']);
 }); 
 
-gulp.task('buildAll', ['build', 'less']);
+gulp.task('buildAll', ['build']);
 gulp.task('default', ['browser-sync']);
