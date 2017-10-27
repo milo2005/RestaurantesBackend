@@ -13,7 +13,7 @@ class RestaurantService {
     insertWithTables(res: Restaurant, numbertables: number) {
         let tables: Table[] = [];
         for (let i = 0; i < numbertables; i++) {
-            tables.push({ numero: i + 1, reserva: null })
+            tables.push({ numero: i + 1, disponible: true })
         }
         res.mesas = tables;
         return this.db.insertOne(res);
@@ -46,7 +46,37 @@ class RestaurantService {
             .toArray();
     }
 
-    
+    tablesByRestaurant(id: string) {
+        return this.db.findOne({ _id: new ObjectID(id) })
+            .then(res => {
+                return Promise.resolve(res.mesas);
+            });
+    }
+
+    tablesByAvailable(id: string) {
+        return this.db.aggregate([
+            { $match: { _id: new ObjectID(id) } },
+            { $project: { mesas: 1 } },
+            { $unwind: "$mesas" },
+            { $match: { "mesas.disponible": true } },
+            { $group: { _id: "$_id", mesas: { $push: "$mesas" } } }
+        ])
+            .toArray()
+            .then(res => {
+                return Promise.resolve(res[0].mesas)
+            });
+    }
+
+    tableUpdate(id: string, table: number, available: boolean) {
+        return this.db.updateOne({
+            _id: new ObjectID(id),
+            "mesas.numero": table
+        }, {
+                $set: {
+                    "mesas.$.disponibilidad":available
+                }
+            });
+    }
 
 }
 

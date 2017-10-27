@@ -3,20 +3,9 @@ export class Location{
     coordinates:number[];
 }
 
-export class Reserver{
-    nombre:string;
-    celular:string;
-}
-
-export class Reserve{
-    inicio:Date;
-    fin:Date;
-    usuario:Reserver;
-}
-
 export class Table{
     numero:number;
-    reserva:Reserve;
+    disponible:boolean;
 }
 
 export class Restaurant{
