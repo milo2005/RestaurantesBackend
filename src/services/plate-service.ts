@@ -1,10 +1,14 @@
-import { Con } from './db-connection';
+import { Con, DBConnection } from './db-connection';
 import { Collection, ObjectID } from 'mongodb';
 import { Plate } from './common/plate';
 
-class PlateService {
+export class PlateService {
 
-    db: Collection<Plate> = Con.db.collection("plates");
+    get db(): Collection<Plate> {
+        return this.con.db.collection("plates");
+    }
+
+    constructor(private con:DBConnection){}
 
     insert(plate: Plate) {
         return this.db.insertOne(plate);
@@ -44,4 +48,4 @@ class PlateService {
 
 }
 
-export const plateService = new PlateService();
+export const plateService = new PlateService(Con);

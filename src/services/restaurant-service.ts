@@ -1,10 +1,14 @@
-import { Con } from './db-connection';
+import { Con, DBConnection } from './db-connection';
 import { Collection, ObjectID } from 'mongodb';
 import { Restaurant, Table } from './common/restaurant';
 
 class RestaurantService {
 
-    db: Collection<Restaurant> = Con.db.collection("restaurants");
+    private get db(): Collection<Restaurant> {
+        return this.con.db.collection("restaurants")
+    }
+
+    constructor(private con: DBConnection) { }
 
     insert(res: Restaurant) {
         return this.db.insertOne(res);
@@ -73,11 +77,11 @@ class RestaurantService {
             "mesas.numero": table
         }, {
                 $set: {
-                    "mesas.$.disponibilidad":available
+                    "mesas.$.disponibilidad": available
                 }
             });
     }
 
 }
 
-export const restaurantService = new RestaurantService();
+export const restaurantService = new RestaurantService(Con);
