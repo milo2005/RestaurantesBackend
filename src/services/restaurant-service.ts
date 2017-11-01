@@ -77,7 +77,7 @@ class RestaurantService {
             "mesas.numero": table
         }, {
                 $set: {
-                    "mesas.$.disponibilidad": available
+                    "mesas.$.disponible": available
                 }
             });
     }

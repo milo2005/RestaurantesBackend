@@ -9,11 +9,11 @@ export class Table{
 }
 
 export class Restaurant{
-    _id:string;
+    _id?:string;
     nombre:string;
     direccion:string;
     contacto:string;
     imagen:string;
     localizacion:Location;
-    mesas:Table[];
+    mesas?:Table[];
 }
