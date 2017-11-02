@@ -4,6 +4,12 @@ import { Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { config } from '../../config/global';
 
+/**
+ * @apiDefine LoginBody
+ * @apiParam {Object} Credenciales Objeto JSON 
+ * @apiParam {String} Credenciales.email Email de usuario
+ * @apiParam {String} Credenciales.password Password de usuario
+ */
 export interface LoginBody {
     email: string;
     password: string;

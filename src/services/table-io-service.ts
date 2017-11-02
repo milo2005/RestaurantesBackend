@@ -1,17 +1,31 @@
 import * as socketIO from 'socket.io';
-import {Server} from 'http';
+import { Server } from 'http';
 
 
-export class TableIoService{
+export class TableIoService {
 
-    init(server:Server){
+    tables: SocketIO.Namespace;
+
+    init(server: Server) {
         let io = socketIO(server);
-        io.on("connection", (socket)=>{
-            socket.emit("saludo",{hola:"Hola como estas"});
-            socket.on("mensaje", (data)=>{
-                console.log(JSON.stringify(data));
+
+        this.tables = io.of("socket/tables");
+        this.tables.on("connection", (socket) => {
+            socket.on("subscribe", (id) => {
+                socket.join(id);
+            });
+            socket.on("unsubscribe", (id) => {
+                socket.leave(id);
             });
         });
+    }
+
+    changeAvailable(id: string, table: number,
+        available: boolean) {
+
+        this.tables.to(id)
+            .emit("available",
+            { mesa: table, disponible: available });
     }
 
 }

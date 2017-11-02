@@ -1,7 +1,7 @@
 import app from './app';
 import * as debugModule from 'debug';
 import * as http from 'http';
-import { TableIoService } from './services/table-io-service';
+import { tableIO } from './services/table-io-service';
 
 const debug = debugModule('node-express-typescript:server');
 
@@ -15,7 +15,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-
+tableIO.init(server);
 
 /**
  * Normalize a port into a number, string, or false.
