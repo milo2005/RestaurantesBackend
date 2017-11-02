@@ -3,8 +3,11 @@ import {
     all, allByIngredients, addIngredient, deleteIngredients,
     deletePlate, insert, update
 } from '../controllers/plates/index';
+import { verifyAuth } from '../middlewares/auth';
 
 const router: Router = Router();
+
+router.use(verifyAuth);
 
 router.get("/:id", all);
 router.get("/", allByIngredients);

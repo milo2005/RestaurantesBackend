@@ -18,7 +18,7 @@ export function login(req: Request, res: Response, next) {
                 let token = sign({ id: result._id },
                     config.secret,{expiresIn:"1h"});
 
-                res.send(new ResponseBody(true));
+                res.send(new ResponseBody(true, token));
             }
             else res.send(new ResponseBody(false));
         })

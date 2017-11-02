@@ -3,8 +3,11 @@ import {
     all, allLocation, insert, update, deleteRes
     , allTable, tableAvailable, tableUpdate
 } from '../controllers/restaurants/index';
+import { verifyAuth } from '../middlewares/auth';
 
 const router: Router = Router();
+
+router.use(verifyAuth);
 
 router.get('/', all);
 router.get('/point', allLocation);
