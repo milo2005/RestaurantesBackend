@@ -9,7 +9,8 @@
     "compile": "node ./node_modules/typescript/bin/tsc -p ./src",
     "compiletests": "node ./node_modules/typescript/bin/tsc -p ./tests",
     "docs":"apidoc -i src/ -o apidocs/ && apidoc-markdown -p apidocs/ -o README.md",
-    "postinstall":"gulp build"
+    "postinstall":"gulp build",
+    "deploy":"npm test && git push heroku master"
 
   },
   "dependencies": {
